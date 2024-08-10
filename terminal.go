@@ -20,6 +20,7 @@ func GetTermDims() (height, width int, err error) {
 	if len(out) == 0 {
 		return 0, 0, errors.New("empty output from stty command")
 	}
+
 	lines := bytes.Split(out, []byte("\n"))
 	if len(lines) == 0 {
 		return 0, 0, errors.New("unexpected output format from stty command")
