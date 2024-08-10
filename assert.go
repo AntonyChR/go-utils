@@ -1,9 +1,42 @@
 package utils
 
-import "testing"
+import (
+    "testing"
+)
 
+func assert(value bool, args []interface{}){
+    if !value {
+        msg := ""
+        var t *testing.T
+
+        if len(args) > 0 {
+            if m, ok := args[0].(string); ok{
+                msg = m
+            } else {
+                panic("Assert: first argument must be a string")
+            }
+        } else {
+            msg = "Assertion failed"
+        }
+
+        if len(args) > 1 {
+            if test, ok := args[1].(*testing.T); ok {
+                t = test
+            } else {
+                panic("Assert: second argument must be of type *testing.T")
+            }
+        }
+
+        if t != nil {
+            t.Error(msg)
+        } else {
+            panic(msg)
+        }
+    }
+
+}
 // Assert checks if a boolean value is true. If the value is false,
-// it generates an error message. Depending on the provided arguments, 
+// it generates an error message. Depending on the provided arguments,
 // it can either panic or log an error in a testing.T instance.
 //
 // Parameters:
@@ -28,34 +61,7 @@ import "testing"
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
 func Assert(value bool, args ...interface{}) {
-    if !value {
-        var msg string
-        var t *testing.T
-
-        if len(args) > 0 {
-            if m, ok := args[0].(string); ok {
-                msg = m
-            } else {
-                panic("Assert: first argument must be a string")
-            }
-        } else {
-            msg = "Assertion failed"
-        }
-
-        if len(args) > 1 {
-            if test, ok := args[1].(*testing.T); ok {
-                t = test
-            } else {
-                panic("Assert: second argument must be of type *testing.T")
-            }
-        }
-
-        if t != nil {
-            t.Error(msg)
-        } else {
-            panic(msg)
-        }
-    }
+    assert(value, args)
 }
 
 // AssertEq checks if two comparable values are equal. If the values are not equal,
@@ -85,7 +91,7 @@ func Assert(value bool, args ...interface{}) {
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
 func AssertEq[K comparable](left_value, right_value K, args ...interface{}) {
-	Assert(left_value == right_value, args)
+    assert(left_value == right_value, args)
 }
 
 // AssertNe checks if two comparable values are not equal. If the values are equal,
@@ -115,5 +121,5 @@ func AssertEq[K comparable](left_value, right_value K, args ...interface{}) {
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
 func AssertNe[K comparable](left_value, right_value K, args ...interface{}) {
-	Assert(left_value != right_value, args)
+    assert(left_value != right_value, args)
 }
