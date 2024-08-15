@@ -5,8 +5,8 @@ import (
 )
 
 func TestGetTermDims(t *testing.T) {
-	_, _, err := GetTermDims()
+	_, _, err := GetTerminalSize()
 	if err != nil {
-		t.Error()
+		t.Error(err)
 	}
 }
