@@ -1,7 +1,7 @@
 package utils
 
 import (
-    "testing"
+	"testing"
 )
 
 func assert(value bool, args []interface{}){
@@ -33,8 +33,8 @@ func assert(value bool, args []interface{}){
             panic(msg)
         }
     }
+} 
 
-}
 // Assert checks if a boolean value is true. If the value is false,
 // it generates an error message. Depending on the provided arguments,
 // it can either panic or log an error in a testing.T instance.
