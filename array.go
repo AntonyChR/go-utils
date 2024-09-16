@@ -36,3 +36,17 @@ func MutMap[T any](arr []T, cb func(T) T) []T {
     return arr
 }
 
+func Resize[T any](arr []T, size int) []T{
+    if len(arr) < size {
+        return arr[:size]
+    }    
+    return arr 
+}
+
+func Flatten[T any](arr [][]T) []T{
+    var narr []T
+    for _,el := range arr {
+        narr = append(narr, el...)
+    }
+    return narr
+}
