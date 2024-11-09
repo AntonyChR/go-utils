@@ -123,3 +123,61 @@ func AssertEq[K comparable](left_value, right_value K, args ...interface{}) {
 func AssertNe[K comparable](left_value, right_value K, args ...interface{}) {
     assert(left_value != right_value, args)
 }
+
+// Must is a generic function that simplifies error handling by enforcing an automatic panic
+// when an error is encountered. It accepts two parameters: a value `x` of any type `T` 
+// and an `error` value `err`.
+//
+// If `err` is not `nil`, Must triggers a panic with the provided error.
+// Otherwise, it simply returns `x`.
+//
+// This function is useful in cases where errors are unexpected or where explicit error handling
+// would add unnecessary complexity to the code.
+//
+// Usage example:
+//    file := Must(os.Open("file.txt"))
+//
+// In this example, if the `os.Open` function encounters an error opening the file,
+// `Must` will panic with that error. Otherwise, it returns the opened file.
+//
+// Parameters:
+// - x: a value of the generic type `T` to return if `err` is `nil`.
+// - err: an `error` value that represents a potential error.
+//
+// Returns:
+// - The value `x` of type `T`, if `err` is `nil`.
+//
+// Panic:
+// - If `err` is not `nil`, Must panics with the provided error.
+func Must[T any] (x T, err error) T {
+    if err != nil {
+        panic(err)
+    }
+    return x
+}
+
+// CheckErr is a helper function that simplifies error handling by panicking 
+// if an error is encountered. It takes a single parameter, `err` of type `error`.
+//
+// If `err` is not `nil`, CheckErr triggers a panic with the provided error.
+// This function is useful in situations where errors are considered fatal
+// and handling them explicitly would add unnecessary complexity.
+//
+// Usage example:
+//    file, err := os.Open("file.txt")
+//    CheckErr(err)
+//
+// In this example, if there is an error while opening the file, `CheckErr` 
+// will cause the program to panic with the given error. If no error is present, 
+// the program continues as normal.
+//
+// Parameters:
+// - err: an `error` value that represents a potential error.
+//
+// Panic:
+// - If `err` is not `nil`, CheckErr panics with the provided error.
+func CheckErr(err error){
+    if err != nil {
+        panic(err)
+    }
+}
