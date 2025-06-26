@@ -14,7 +14,7 @@ func isValidIPv4(ip string) bool {
 }
 
 func TestGetLocalIP(t *testing.T){
-    ip, err := GetLocalIP()
+    ip, err := GetLocalIPv4()
     if err != nil {
         t.Error(err)
     }
