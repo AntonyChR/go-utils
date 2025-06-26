@@ -7,6 +7,19 @@ import (
 
 type Vec []float64
 
+func (v *Vec)Equals(b Vec) bool {
+    if len(*v) != len(b) {
+        return false
+    }
+
+    for i, v := range b {
+        if v != b[i] {
+            return false
+        }
+    }
+    return true
+}
+
 func (v *Vec) Len() int {
 	return len(*v)
 }
@@ -152,6 +165,23 @@ func (v *Vec) Rot(angle float64) Vec {
 
 func Vec2FromAngle(angle float64) Vec {
 	return Vec{math.Cos(angle), math.Sin(angle)}
+}
+
+//
+// methods for 3d vectors
+//
+
+const ERROR_3D_METHOD = "This method is only available for 3d vectors"
+
+func (v *Vec) Prod3d(u Vec) Vec {
+	AssertEq(v.Len(), 3, ERROR_3D_METHOD)
+	AssertEq(u.Len(), 3, ERROR_3D_METHOD)
+
+	return Vec{
+		(*v)[1]*u[2] - (*v)[2]*u[1],
+		(*v)[2]*u[0] - (*v)[0]*u[2],
+		(*v)[0]*u[1] - (*v)[1]*u[0],
+	}
 }
 
 func Zero(size int) Vec {
