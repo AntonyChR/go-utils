@@ -7,17 +7,17 @@ import (
 
 type Vec []float64
 
-func (v *Vec)Equals(b Vec) bool {
-    if len(*v) != len(b) {
-        return false
-    }
+func (v *Vec) Equals(b Vec) bool {
+	if len(*v) != len(b) {
+		return false
+	}
 
-    for i, v := range b {
-        if v != b[i] {
-            return false
-        }
-    }
-    return true
+	for i, v := range b {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func (v *Vec) Len() int {
@@ -161,6 +161,13 @@ func (v *Vec) Rot(angle float64) Vec {
 	x := (*v)[0]*math.Cos(angle) - (*v)[1]*math.Sin(angle)
 	y := (*v)[0]*math.Sin(angle) + (*v)[1]*math.Cos(angle)
 	return Vec{x, y}
+}
+
+func (v *Vec) IsParallelTo(u Vec) bool {
+	AssertEq(v.Len(), 2, ERROR_2d_METHOD)
+	AssertEq(u.Len(), 2, ERROR_2d_METHOD)
+
+	return math.Abs((*v)[0]*u[1]-(*v)[1]*u[0]) < 1e-9
 }
 
 func Vec2FromAngle(angle float64) Vec {
