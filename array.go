@@ -1,5 +1,7 @@
 package utils
 
+import "cmp"
+
 // Map applies a transformation function to each element of a slice,
 // returning a new slice with the results. The original slice is not modified.
 //
@@ -52,4 +54,15 @@ func Contains[T comparable](arr []T, el T) bool {
         }
     }
     return false
+}
+
+
+func Max[T cmp.Ordered](arr []T) T {
+	maxVal := arr[0]
+	for _, num := range arr[1:] {
+		if num > maxVal {
+			maxVal = num
+		}
+	}
+	return maxVal
 }
