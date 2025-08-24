@@ -1,6 +1,8 @@
 package utils
 
-import "cmp"
+import (
+	"cmp"
+)
 
 // Map applies a transformation function to each element of a slice,
 // returning a new slice with the results. The original slice is not modified.
@@ -65,4 +67,41 @@ func Max[T cmp.Ordered](arr []T) T {
 		}
 	}
 	return maxVal
+}
+// FilterPrealloc creates a new slice containing only the elements that satisfy the given condition.
+//
+// Parameters:
+//   - arr: The input slice containing elements of any type.
+//   - cb: A function that takes an element of type T and returns a boolean value.
+//
+// Returns:
+//   - A new slice of type T containing only the elements that satisfy the condition.
+func FilterPrealloc[T any](arr []T, cb func(T)bool) []T {
+    l := make([]T, 0, len(arr))
+    for _,b := range arr {
+        if cb(b) {
+            l = append(l, b)
+        }
+    }
+    return l
+}
+
+// FilterInPlace modifies the original slice in place, removing elements that do not satisfy the given condition.
+//
+// Parameters:
+//   - arr: The input slice containing elements of any type. This slice
+//          will be modified directly.
+//   - cb: A function that takes an element of type T and returns a boolean value.
+//
+// Returns:
+//   - The original slice with only the elements that satisfy the condition.
+func FilterInPlace[T any](arr []T, cb func(T)bool) []T {
+    writeIndex := 0
+    for _, b := range arr {
+        if cb(b) {
+            arr[writeIndex] = b
+            writeIndex++
+        }
+    }
+    return arr[:writeIndex]
 }

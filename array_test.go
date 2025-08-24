@@ -54,12 +54,78 @@ func TestMutMap(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
-	nums := []int{1, 2, 3, 4, 5}
-	expected := 5
+	nums1 := []int{1, 2, 3, 4, 5}
+	expected1 := 5
 
-	res := Max(nums)
+	res := Max(nums1)
 
-	if res != expected {
-		t.Errorf("incorrect max value, expected = %d, got = %d", expected, res)
+	if res != expected1 {
+		t.Errorf("incorrect max value, expected = %d, got = %d", expected1, res)
+	}
+
+	nums2 := []int{1, 2}
+	expected2 := 2
+
+	res = Max(nums2)
+
+	if res != expected2 {
+		t.Errorf("incorrect max value, expected = %d, got = %d", expected1, res)
+	}
+}
+
+func TestFilter(t *testing.T) {
+	input1 := []int{1,2,3,4,5,6,7,8,9,10}
+	expect := []int{2,4,6,8,10}
+
+	res := FilterPrealloc(input1,func(n int) bool {
+		return n%2==0
+	})
+
+	if len(res) != len(expect) {
+			t.Errorf("inconsistent slice length, got %v, expect %v", len(res), len(expect))
+	}
+
+	for i, n := range res {
+		if n != expect[i] {
+			t.Errorf("Error filtering elements, got %v, expect %v", res, expect)
+		}
+	}
+}
+
+func BenchmarkFilterPrealloc(b *testing.B) {
+	size := 1_000_000
+	testData := make([]int, size)
+	for i := 0; i < size; i++ {
+		testData[i] = i
+	}
+
+	// test callback 
+	isEven := func(n int) bool {
+		return n%2 == 0
+	}
+
+	// discard setup time 
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		FilterPrealloc(testData, isEven)
+	}
+}
+
+func BenchmarkFilterInPlace(b *testing.B) {
+	size := 1_000_000
+	testData := make([]int, size)
+	for i := 0; i < size; i++ {
+		testData[i] = i
+	}
+
+	isEven := func(n int) bool {
+		return n%2 == 0
+	}
+
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		FilterInPlace(testData, isEven)
 	}
 }
