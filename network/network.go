@@ -1,4 +1,5 @@
-package utils
+// network package provides functions to interact with the network, such as getting the local IPv4 address.
+package network
 
 import (
 	"fmt"

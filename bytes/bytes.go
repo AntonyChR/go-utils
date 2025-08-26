@@ -1,4 +1,5 @@
-package utils
+// bytes package provides functions for byte manipulation.
+package bytes
 
 func uint16ToBytes(n uint16)[]byte{
 	p1 := uint8(n >> 8)

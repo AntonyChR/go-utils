@@ -1,4 +1,5 @@
-package utils
+// array package provides functions for array manipulation.
+package array
 
 import (
 	"cmp"

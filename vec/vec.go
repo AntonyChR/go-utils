@@ -1,8 +1,11 @@
-package utils
+// vec package provides a Vec type for 2D and 3D vector mathematics, including operations like dot product, cross product, and rotation.
+package vec
 
 import (
 	"math"
 	rand "math/rand"
+
+	"github.com/AntonyChR/go-utils/assert"
 )
 
 // Vec represents a vector of float64 values.
@@ -58,7 +61,7 @@ func (v *Vec) Add(value any) Vec {
 		return c
 	}
 	if u, ok := value.(Vec); ok {
-		AssertEq(len(u), v.Len(), "Vectors must have the same size")
+		assert.AssertEq(len(u), v.Len(), "Vectors must have the same size")
 		c := make([]float64, v.Len())
 		for i := range v.Len() {
 			c[i] = u[i] + (*v)[i]
@@ -77,7 +80,7 @@ func (v *Vec) Sub(value any) Vec {
 		return c
 	}
 	if u, ok := value.(Vec); ok {
-		AssertEq(len(u), v.Len(), "Vectors must have the same size")
+		assert.AssertEq(len(u), v.Len(), "Vectors must have the same size")
 		c := make([]float64, v.Len())
 		for i := range v.Len() {
 			c[i] = (*v)[i] - u[i]
@@ -97,7 +100,7 @@ func (v *Vec) Scale(n float64) Vec {
 }
 
 func (v *Vec) Dot(u Vec) float64 {
-	AssertEq(len(u), v.Len(), "Vectors must have the same size")
+	assert.AssertEq(len(u), v.Len(), "Vectors must have the same size")
 	acc := 0.0
 	for i := range *v {
 		acc += (*v)[i] * u[i]
@@ -152,7 +155,7 @@ func (v *Vec) Map(cb func(float64) float64) Vec {
 const ERROR_2D_METHOD = "This method is only avalaible for 2d *vetors"
 
 func (v *Vec) ProjectOn(u Vec) Vec {
-	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
+	assert.AssertEq(v.Len(), 2, ERROR_2D_METHOD)
 	unit := u.Unit()
 	return unit.Scale(v.Dot(u) / u.Norm())
 }
@@ -165,15 +168,15 @@ func (v *Vec) ProjectOn(u Vec) Vec {
 // Returns:
 //   - The rotated 2D vector.
 func (v *Vec) Rot(angle float64) Vec {
-	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
+	assert.AssertEq(v.Len(), 2, ERROR_2D_METHOD)
 	x := (*v)[0]*math.Cos(angle) - (*v)[1]*math.Sin(angle)
 	y := (*v)[0]*math.Sin(angle) + (*v)[1]*math.Cos(angle)
 	return Vec{x, y}
 }
 
 func (v *Vec) IsParallelTo(u Vec) bool {
-	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
-	AssertEq(u.Len(), 2, ERROR_2D_METHOD)
+	assert.AssertEq(v.Len(), 2, ERROR_2D_METHOD)
+	assert.AssertEq(u.Len(), 2, ERROR_2D_METHOD)
 
 	return math.Abs((*v)[0]*u[1]-(*v)[1]*u[0]) < 1e-9
 }
@@ -203,8 +206,8 @@ const ERROR_3D_METHOD = "This method is only available for 3d vectors"
 // Returns:
 //   - The cross product of the two vectors as a new 3D vector.
 func (v *Vec) Prod3d(u Vec) Vec {
-	AssertEq(v.Len(), 3, ERROR_3D_METHOD)
-	AssertEq(u.Len(), 3, ERROR_3D_METHOD)
+	assert.AssertEq(v.Len(), 3, ERROR_3D_METHOD)
+	assert.AssertEq(u.Len(), 3, ERROR_3D_METHOD)
 
 	return Vec{
 		(*v)[1]*u[2] - (*v)[2]*u[1],

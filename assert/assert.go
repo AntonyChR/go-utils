@@ -1,10 +1,11 @@
-package utils
+// assert package provides helper functions for writing tests, such as Assert, AssertEq, and AssertNe.
+package assert
 
 import (
 	"testing"
 )
 
-func assert(value bool, args []interface{}){
+func assert(value bool, args []any){
     if !value {
         msg := ""
         var t *testing.T
@@ -60,7 +61,7 @@ func assert(value bool, args []interface{}){
 //    the function will panic with the message.
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
-func Assert(value bool, args ...interface{}) {
+func Assert(value bool, args ...any) {
     assert(value, args)
 }
 
@@ -90,7 +91,7 @@ func Assert(value bool, args ...interface{}) {
 //    the function will panic with the message.
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
-func AssertEq[K comparable](left_value, right_value K, args ...interface{}) {
+func AssertEq[K comparable](left_value, right_value K, args ...any) {
     assert(left_value == right_value, args)
 }
 
@@ -120,7 +121,7 @@ func AssertEq[K comparable](left_value, right_value K, args ...interface{}) {
 //    the function will panic with the message.
 //  - If no custom message is provided, "Assertion failed" will be used as the default message.
 //  - The function will panic if the argument types are not as expected.
-func AssertNe[K comparable](left_value, right_value K, args ...interface{}) {
+func AssertNe[K comparable](left_value, right_value K, args ...any) {
     assert(left_value != right_value, args)
 }
 

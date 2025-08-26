@@ -1,4 +1,5 @@
-package utils
+// math package provides functions for mathematical operations.
+package math
 
 import "math"
 

@@ -1,4 +1,5 @@
-package utils
+// terminal package provides functions to interact with the terminal, such as getting the terminal size.
+package terminal
 
 import (
 	"bytes"
@@ -14,8 +15,8 @@ import (
 // dimensions, where the expected output is two numbers: the number of rows (height)
 // and the number of columns (width).
 //
-// Note: This function is only available on Linux systems. It relies on the 
-// `stty` command, which may not be available or function the same way on other 
+// Note: This function is only available on Linux systems. It relies on the
+// `stty` command, which may not be available or function the same way on other
 // operating systems.
 //
 // Returns:
