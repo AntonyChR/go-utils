@@ -68,6 +68,7 @@ func Max[T cmp.Ordered](arr []T) T {
 	}
 	return maxVal
 }
+
 // FilterPrealloc creates a new slice containing only the elements that satisfy the given condition.
 //
 // Parameters:
@@ -104,4 +105,26 @@ func FilterInPlace[T any](arr []T, cb func(T)bool) []T {
         }
     }
     return arr[:writeIndex]
+}
+
+
+
+
+func DeepCopyArrMap[K comparable, V any](original []map[K]V) []map[K]V {
+	if original == nil {
+		return nil
+	}
+    deepCopy := make([]map[K]V, len(original))
+
+    for i, originalMap := range original {
+        newMap := make(map[K]V, len(originalMap))
+
+        for key, value := range originalMap {
+            newMap[key] = value
+        }
+
+        deepCopy[i] = newMap
+    }
+
+    return deepCopy
 }
