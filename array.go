@@ -108,8 +108,13 @@ func FilterInPlace[T any](arr []T, cb func(T)bool) []T {
 }
 
 
-
-
+// DeepCopyArrMap creates a deep copy of a slice of maps.
+//
+// Parameters:
+//   - original: The input slice of maps containing elements of any type.
+//
+// Returns:
+//   - A new slice of maps containing the same elements as the original slice.
 func DeepCopyArrMap[K comparable, V any](original []map[K]V) []map[K]V {
 	if original == nil {
 		return nil
