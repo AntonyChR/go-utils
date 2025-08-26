@@ -49,7 +49,7 @@ func (v *Vec) Norm() float64 {
 	return math.Sqrt(acc)
 }
 
-func (v *Vec) Add(value interface{}) Vec {
+func (v *Vec) Add(value any) Vec {
 	if u, ok := value.(float64); ok {
 		c := make([]float64, v.Len())
 		for i, n := range *v {
@@ -68,7 +68,7 @@ func (v *Vec) Add(value interface{}) Vec {
 	panic("The parameter 'value' must be float64 or an instance of Vec")
 }
 
-func (v *Vec) Sub(value interface{}) Vec {
+func (v *Vec) Sub(value any) Vec {
 	if u, ok := value.(float64); ok {
 		c := make([]float64, v.Len())
 		for i, n := range *v {
@@ -178,6 +178,13 @@ func (v *Vec) IsParallelTo(u Vec) bool {
 	return math.Abs((*v)[0]*u[1]-(*v)[1]*u[0]) < 1e-9
 }
 
+// Vec2FromAngle creates a 2D vector from an angle.
+//
+// Parameters:
+//   - angle: The angle in radians to create the vector from.
+//
+// Returns:
+//   - The 2D vector created from the angle.
 func Vec2FromAngle(angle float64) Vec {
 	return Vec{math.Cos(angle), math.Sin(angle)}
 }
@@ -188,6 +195,13 @@ func Vec2FromAngle(angle float64) Vec {
 
 const ERROR_3D_METHOD = "This method is only available for 3d vectors"
 
+// Prod3d calculates the cross product of two 3D vectors.
+//
+// Parameters:
+//   - u: The second 3D vector.
+//
+// Returns:
+//   - The cross product of the two vectors as a new 3D vector.
 func (v *Vec) Prod3d(u Vec) Vec {
 	AssertEq(v.Len(), 3, ERROR_3D_METHOD)
 	AssertEq(u.Len(), 3, ERROR_3D_METHOD)
