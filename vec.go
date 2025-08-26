@@ -5,6 +5,7 @@ import (
 	rand "math/rand"
 )
 
+// Vec represents a vector of float64 values.
 type Vec []float64
 
 func (v *Vec) Equals(b Vec) bool {
@@ -148,24 +149,31 @@ func (v *Vec) Map(cb func(float64) float64) Vec {
 // methods for 2d *vetors
 //
 
-const ERROR_2d_METHOD = "This method is only avalaible for 2d *vetors"
+const ERROR_2D_METHOD = "This method is only avalaible for 2d *vetors"
 
 func (v *Vec) ProjectOn(u Vec) Vec {
-	AssertEq(v.Len(), 2, ERROR_2d_METHOD)
+	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
 	unit := u.Unit()
 	return unit.Scale(v.Dot(u) / u.Norm())
 }
 
+// Rot rotates a 2D vector by a specified angle.
+//
+// Parameters:
+//   - angle: The angle in radians to rotate the vector.
+//
+// Returns:
+//   - The rotated 2D vector.
 func (v *Vec) Rot(angle float64) Vec {
-	AssertEq(v.Len(), 2, ERROR_2d_METHOD)
+	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
 	x := (*v)[0]*math.Cos(angle) - (*v)[1]*math.Sin(angle)
 	y := (*v)[0]*math.Sin(angle) + (*v)[1]*math.Cos(angle)
 	return Vec{x, y}
 }
 
 func (v *Vec) IsParallelTo(u Vec) bool {
-	AssertEq(v.Len(), 2, ERROR_2d_METHOD)
-	AssertEq(u.Len(), 2, ERROR_2d_METHOD)
+	AssertEq(v.Len(), 2, ERROR_2D_METHOD)
+	AssertEq(u.Len(), 2, ERROR_2D_METHOD)
 
 	return math.Abs((*v)[0]*u[1]-(*v)[1]*u[0]) < 1e-9
 }
