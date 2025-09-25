@@ -74,15 +74,15 @@ func TestMax(t *testing.T) {
 }
 
 func TestFilter(t *testing.T) {
-	input1 := []int{1,2,3,4,5,6,7,8,9,10}
-	expect := []int{2,4,6,8,10}
+	input1 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	expect := []int{2, 4, 6, 8, 10}
 
-	res := FilterPrealloc(input1,func(n int) bool {
-		return n%2==0
+	res := FilterPrealloc(input1, func(n int) bool {
+		return n%2 == 0
 	})
 
 	if len(res) != len(expect) {
-			t.Errorf("inconsistent slice length, got %v, expect %v", len(res), len(expect))
+		t.Errorf("inconsistent slice length, got %v, expect %v", len(res), len(expect))
 	}
 
 	for i, n := range res {
@@ -95,16 +95,16 @@ func TestFilter(t *testing.T) {
 func BenchmarkFilterPrealloc(b *testing.B) {
 	size := 1_000_000
 	testData := make([]int, size)
-	for i := 0; i < size; i++ {
+	for i := range size {
 		testData[i] = i
 	}
 
-	// test callback 
+	// test callback
 	isEven := func(n int) bool {
 		return n%2 == 0
 	}
 
-	// discard setup time 
+	// discard setup time
 	b.ResetTimer()
 
 	for b.Loop() {
@@ -115,7 +115,7 @@ func BenchmarkFilterPrealloc(b *testing.B) {
 func BenchmarkFilterInPlace(b *testing.B) {
 	size := 1_000_000
 	testData := make([]int, size)
-	for i := 0; i < size; i++ {
+	for i := range size {
 		testData[i] = i
 	}
 
