@@ -107,7 +107,7 @@ func BenchmarkFilterPrealloc(b *testing.B) {
 	// discard setup time 
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		FilterPrealloc(testData, isEven)
 	}
 }
@@ -125,7 +125,7 @@ func BenchmarkFilterInPlace(b *testing.B) {
 
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		FilterInPlace(testData, isEven)
 	}
 }
