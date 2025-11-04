@@ -47,3 +47,13 @@ func GetLocalIPv4() (string, error) {
 
 	return "", fmt.Errorf("no se encontró dirección IPv4 en la red local")
 }
+
+func GetAvailablePort() (int, error) {
+	ln, err := net.Listen("tcp", ":0")
+	if err != nil {
+		return 0, err
+	}
+	defer ln.Close()
+	addr := ln.Addr().(*net.TCPAddr)
+	return addr.Port, nil
+}
