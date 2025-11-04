@@ -50,13 +50,13 @@ func Flatten[T any](arr [][]T) []T{
 }
 
 // Contains checks if a given element exists in a slice.
-func Contains[T comparable](arr []T, el T) bool {
-    for _, e := range arr {
+func Contains[T comparable](arr []T, el T) int{
+    for i, e := range arr {
         if e == el {
-            return true
+            return  i
         }
     }
-    return false
+    return -1
 }
 
 
